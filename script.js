@@ -1,19 +1,26 @@
 'use strict';
 const randomNumber = () => {
 	let number = 1;
-	return function () {
+	return () => {
 		return number = Math.floor(Math.random() * 100) || number;
+	}
+};
+const attemptsNumber = () => {
+	let attempts;
+	return () => {
+		return attempts = 10;
 	}
 };
 const restart = () => {
 	number = getRandomNumber();
-	attempts = 10;
+	attempts = getAttempts();
 	msg = prompt('Введите ваше число (Осталось попыток ' + attempts + ')');
 	validateNumber(msg);
 };
 const getRandomNumber = randomNumber();
 let number = getRandomNumber();
-let attempts = 10;
+let getAttempts = attemptsNumber();
+let attempts = getAttempts();
 
 alert('Загадано число от 1 до 100\r\nВаша задача его угадать.\r\nУ вас ' + attempts + ' попыток' + '\r\nПоехали!');
 let msg = prompt('Введите ваше число (Осталось попыток ' + attempts + ')');
@@ -43,8 +50,11 @@ const validateNumber = msg => {
 					msg = prompt('Введите ваше число (Осталось попыток ' + attempts + ')');
 					validateNumber(msg);
 				} else {
-					alert('Попытки закончились, попробуйте заного с новым числом');
-					restart();
+					let conf = confirm('Попытки закончились, сыграть заново с новым числом?');
+					if (conf) {
+						restart();
+					}
+					return;
 				}
 			} else if (parseFloat(userNumber) > number) {
 				--attempts;
@@ -53,16 +63,39 @@ const validateNumber = msg => {
 					msg = prompt('Введите ваше число (Осталось попыток ' + attempts + ')');
 					validateNumber(msg);
 				} else {
-					alert('Попытки закончились, попробуйте заново с новым числом');
-					restart();
+					let conf = confirm('Попытки закончились, сыграть заново с новым числом?');
+					if (conf) {
+						restart();
+					}
+					return;
 				}
 			} else {
 				--attempts;
-				msg = prompt('Введено не число.\r\nВведите число! (Осталось попыток ' + attempts + ')');
-				validateNumber(msg);
+				if (attempts > 0) {
+					msg = prompt('Введено не число.\r\nВведите число! (Осталось попыток ' + attempts + ')');
+					validateNumber(msg);
+				} else {
+					let conf = confirm('Попытки закончились, сыграть заново с новым числом?');
+					if (conf) {
+						restart();
+					}
+					return;
+				}
 			}
 		} else if (attempts === 0) {
 			restart();
+		}
+	} else {
+		--attempts;
+		if (attempts > 0) {
+			msg = prompt('Введено не число.\r\nВведите число! (Осталось попыток ' + attempts + ')');
+			validateNumber(msg);
+		} else {
+			let conf = confirm('Попытки закончились, сыграть заново с новым числом?');
+			if (conf) {
+				restart();
+			}
+			return;
 		}
 	}
 };
