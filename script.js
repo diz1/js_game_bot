@@ -18,32 +18,31 @@ const restart = () => {
 	validateNumber(msg);
 };
 const getRandomNumber = randomNumber();
+const getAttempts = attemptsNumber();
 let number = getRandomNumber();
-let getAttempts = attemptsNumber();
 let attempts = getAttempts();
 
 alert('Загадано число от 1 до 100\r\nВаша задача его угадать.\r\nУ вас ' + attempts + ' попыток' + '\r\nПоехали!');
 let msg = prompt('Введите ваше число (Осталось попыток ' + attempts + ')');
 
 const validateNumber = msg => {
-	let userNumber = msg;
-	if (typeof parseFloat(userNumber) === 'number' && !isNaN(userNumber) && typeof parseFloat(userNumber) !== 'object') {
+	if (typeof parseFloat(msg) === 'number' && !isNaN(msg) && typeof parseFloat(msg) !== 'object') {
 		if (attempts > 0) {
-			if (parseFloat(userNumber) === number) {
+			if (parseFloat(msg) === number) {
 				let conf = confirm('\u2705Молодец!\r\n\u2705Ты правильно угадал(-ла) число!' +
 					'\r\n\u2705Поздравляю!\r\nПопробовать еще раз?');
 				if (conf) {
 					restart();
 				}
 				return;
-			} else if (userNumber === null) {
+			} else if (msg === null) {
 				let conf = confirm('Похоже вы нажали «Отмена»\r\nЖелаете выйти?');
 				if (!conf) {
 					msg = prompt('Введите ваше число (Осталось попыток ' + attempts + ')');
 					validateNumber(msg);
 				}
 				return;
-			} else if (parseFloat(userNumber) < number) {
+			} else if (parseFloat(msg) < number) {
 				--attempts;
 				if (attempts > 0) {
 					alert('\u274cНеверно!\r\n\u274cВаше число меньше загаданного\r\n\u274cПопробуй еще раз!');
@@ -56,7 +55,7 @@ const validateNumber = msg => {
 					}
 					return;
 				}
-			} else if (parseFloat(userNumber) > number) {
+			} else if (parseFloat(msg) > number) {
 				--attempts;
 				if (attempts > 0) {
 					alert('\u274cНеверно!\r\n\u274cВаше число больше загаданного\r\n\u274cПопробуй еще раз!');
