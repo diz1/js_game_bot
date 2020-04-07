@@ -1,8 +1,8 @@
 'use strict';
 const randomNumber = () => {
 	let number = 1;
-	return () => {
-		return number = Math.floor(Math.random() * 100) || number;
+	return (min, max) => {
+		return number = Math.floor(min + Math.random() * (max + 1 - min)) || number;
 	}
 };
 const attemptsNumber = () => {
@@ -12,14 +12,14 @@ const attemptsNumber = () => {
 	}
 };
 const restart = () => {
-	number = getRandomNumber();
+	number = getRandomNumber(1, 100);
 	attempts = getAttempts();
 	msg = prompt('Введите ваше число (Осталось попыток ' + attempts + ')');
 	validateNumber(msg);
 };
 const getRandomNumber = randomNumber();
 const getAttempts = attemptsNumber();
-let number = getRandomNumber();
+let number = getRandomNumber(1, 100);
 let attempts = getAttempts();
 
 alert('Загадано число от 1 до 100\r\nВаша задача его угадать.\r\nУ вас ' + attempts + ' попыток' + '\r\nПоехали!');
